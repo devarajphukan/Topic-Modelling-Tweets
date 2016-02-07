@@ -19,6 +19,7 @@ def tokenize(text):
 	text = re.sub("\\b[a-zA-Z0-9]{10,100}\\b"," ",text) # Removing very long words above 10 characters
 	text = re.sub("\\b[a-zA-Z0-9]{0,1}\\b"," ",text) # Removing single characters (e.g k, K)
 	tokens = nltk.word_tokenize(text.strip())
+	tokens = nltk.pos_tag(tokens)
 	# Uncomment next line to use stemmer
 	# tokens = stem_tokens(tokens, stemmer)
 	return tokens
@@ -34,9 +35,9 @@ def analyze(fileObj,Uname) :
 	for doc in fileObj :
 		temp_doc = tokenize(doc.strip())
 		current_doc = []
-		for word in temp_doc :
-			if word not in stopset :
-				current_doc.append(word)        
+		for word in range(len(temp_doc)) :
+			if temp_doc[word][0] not in stopset and temp_doc[word][1] == 'NN':
+				current_doc.append(temp_doc[word][0])        
 
 		text_corpus.append(current_doc)
 
