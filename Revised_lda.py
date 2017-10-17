@@ -44,7 +44,7 @@ def analyze(fileObj,Uname) :
 
 	dictionary = corpora.Dictionary(text_corpus)
 	corpus = [dictionary.doc2bow(text) for text in text_corpus]
-	ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=3, id2word = dictionary,passes=100)
+	ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=3, id2word = dictionary,passes=70)
 	print 'Topics for ',Uname,'\n'
 	for topics in ldamodel.print_topics(num_topics=3, num_words=7) :
 		print topics,"\n"
