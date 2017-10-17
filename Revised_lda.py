@@ -1,4 +1,4 @@
-import re, nltk        
+import re, nltk
 from nltk.stem.porter import PorterStemmer
 from nltk.corpus import stopwords
 from gensim import corpora, models
@@ -13,7 +13,7 @@ def stem_tokens(tokens, stemmer):
 	return stemmed
 
 def tokenize(text):
-	
+
 	text = re.sub("[^a-zA-Z]", " ", text) # Removing numbers and punctuation
 	text = re.sub(" +"," ", text) # Removing extra white space
 	text = re.sub("\\b[a-zA-Z0-9]{10,100}\\b"," ",text) # Removing very long words above 10 characters
@@ -30,23 +30,23 @@ for i in freq_words :
     stopset.append(i)
 
 def analyze(fileObj,Uname) :
-	
+
 	text_corpus = []
 	for doc in fileObj :
 		temp_doc = tokenize(doc.strip())
 		current_doc = []
 		for word in range(len(temp_doc)) :
 			if temp_doc[word][0] not in stopset and temp_doc[word][1] == 'NN':
-				current_doc.append(temp_doc[word][0])        
+				current_doc.append(temp_doc[word][0])
 
 		text_corpus.append(current_doc)
 
 
 	dictionary = corpora.Dictionary(text_corpus)
 	corpus = [dictionary.doc2bow(text) for text in text_corpus]
-	ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=3, id2word = dictionary,passes=60)
+	ldamodel = gensim.models.ldamodel.LdaModel(corpus, num_topics=4, id2word = dictionary,passes=60)
 	print 'Topics for ',Uname,'\n'
-	for topics in ldamodel.print_topics(num_topics=3, num_words=7) :
+	for topics in ldamodel.print_topics(num_topics=4, num_words=8) :
 		print topics,"\n"
 
 narendraModi = open('narendramodi.txt')
